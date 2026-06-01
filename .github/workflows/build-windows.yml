@@ -1,4 +1,4 @@
-name: Build Windows EXE
+name: Baita-Photo-Selector-Windows-v0.1-alpha
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "baita_photo_selector_pro.py"
+      - "baita_photo_selector_pro_v0.1-alpha.py"
       - "requirements.txt"
       - ".github/workflows/build-windows.yml"
   release:
@@ -33,16 +33,16 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --onefile --windowed --name "Baita Photo Selector" baita_photo_selector_pro.py
+          pyinstaller --onefile --windowed --name "Baita Photo Selector Pro v0.1-alpha" baita_photo_selector_pro_v0.1-alpha.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Baita-Photo-Selector-Windows-v1.0
-          path: "dist/Baita Photo Selector.exe"
+          name: Baita-Photo-Selector-Windows-v0.1-alpha
+          path: "dist/Baita Photo Selector v0.1.exe"
 
       - name: Upload executable to release
         if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
         with:
-          files: "dist/Baita Photo Selector.exe"
+          files: "dist/Baita Photo Selector v0.1.exe.exe"
