@@ -1,0 +1,6 @@
+opencv-python
+pillow
+mediapipe
+imagehash
+rawpy
+numpy
