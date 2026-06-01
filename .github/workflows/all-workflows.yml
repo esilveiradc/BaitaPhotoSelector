@@ -95,7 +95,7 @@ jobs:
           pyinstaller --onefile --windowed --name "Baita Photo Selector" "${{ steps.app.outputs.entry }}"
 
       - name: Upload Windows executable artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: Baita-Photo-Selector-Windows
           path: dist/*
