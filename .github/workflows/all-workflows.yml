@@ -1,0 +1,102 @@
+name: All workflows
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Python project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install dependencies
+        run: |
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      - name: Check Python syntax
+        run: python -m compileall .
+
+  build-windows-exe:
+    name: Build Windows executable
+    runs-on: windows-latest
+    needs: validate
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          if (Test-Path requirements.txt) {
+            pip install -r requirements.txt
+          }
+          pip install pyinstaller
+
+      - name: Locate main application file
+        id: app
+        shell: pwsh
+        run: |
+          $preferred = @(
+            "baita_photo_selector_pro_v0.1-alpha.py",
+            "baita_photo_selector.py",
+            "main.py",
+            "app.py"
+          )
+
+          $entry = $preferred | Where-Object { Test-Path $_ } | Select-Object -First 1
+
+          if (-not $entry) {
+            $entry = Get-ChildItem -Path . -Filter "*.py" -File |
+              Where-Object { $_.Name -notmatch "^(test_|setup\.py)" } |
+              Select-Object -First 1 -ExpandProperty Name
+          }
+
+          if (-not $entry) {
+            throw "Nenhum arquivo Python principal foi encontrado para gerar o executavel."
+          }
+
+          "entry=$entry" >> $env:GITHUB_OUTPUT
+          Write-Host "Arquivo principal encontrado: $entry"
+
+      - name: Build executable with PyInstaller
+        shell: pwsh
+        run: |
+          pyinstaller --onefile --windowed --name "Baita Photo Selector" "${{ steps.app.outputs.entry }}"
+
+      - name: Upload Windows executable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Baita-Photo-Selector-Windows
+          path: dist/*
+          if-no-files-found: error
