@@ -1,10 +1,12 @@
 # Baita Photo Selector
 
-**Versão atual: 1.0**
+**Versão atual: 0.1-alpha**
 
 Software em Python para seleção inteligente de fotografias, criado para ajudar fotógrafos a revisar grandes volumes de imagens e separar fotos tremidas, desfocadas, borradas, escuras, estouradas, com olhos fechados ou muito parecidas.
 
-## Recursos da versão 1.0
+> Status atual: versão Alpha para testes e validação. Ainda não é uma versão estável de produção.
+
+## Recursos da versão 0.1-alpha
 
 - Interface gráfica com Tkinter
 - Perfil inicial configurável: `Padrao`
@@ -19,7 +21,6 @@ Software em Python para seleção inteligente de fotografias, criado para ajudar
 - Detecção de fotos parecidas
 - Sugestão automática da foto mais nítida do grupo
 - Comparação lado a lado de fotos parecidas
-- Botão para manter uma foto e enviar as outras do grupo para revisão/ruins
 - Zoom 100%
 - Modo copiar ou mover
 - Desfazer ações da sessão
@@ -94,17 +95,25 @@ relatorio_baita_photo_selector.csv
 
 O relatório inclui score, motivos, nitidez, exposição, motion blur e grupos de fotos parecidas.
 
-## Changelog
+## Changelog resumido
 
-### 1.0
+### 0.1-alpha
 
-Primeira versão pública do Baita Photo Selector.
+Primeira versão pública de desenvolvimento do Baita Photo Selector.
 
-Inclui detecção de nitidez, tremida, exposição ruim, olhos fechados, fotos parecidas, perfis configuráveis, revisão visual, zoom 100%, relatório CSV e suporte inicial a RAW.
+Inclui a base da interface, análise de nitidez, tremida, exposição ruim, olhos fechados, fotos parecidas, perfis configuráveis, revisão visual, zoom 100%, relatório CSV e suporte inicial a RAW.
 
 ## Observação
 
 A análise automática ajuda na triagem, mas não substitui totalmente a revisão humana. Em eventos, corridas e retratos, a foto tecnicamente mais nítida nem sempre é a melhor expressão, pose ou composição.
+
+## Roadmap
+
+### Próximas versões previstas
+
+- `v0.2-alpha`: correções, testes com lotes reais e ajuste dos limites de análise.
+- `v0.5-beta`: cache, configurações persistentes, miniaturas em grade e melhorias de comparação.
+- `v1.0-stable`: versão testada, empacotada e pronta para uso profissional.
 
 ## Licença
 
