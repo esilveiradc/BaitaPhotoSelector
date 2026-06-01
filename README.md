@@ -53,13 +53,13 @@ pip install pyinstaller
 Gere o executável:
 
 ```bash
-pyinstaller --onefile --windowed --name "Baita Photo Selector" baita_photo_selector_pro.py
+pyinstaller --onefile --windowed --name "Baita Photo Selector Pro v0.1-alpha" baita_photo_selector_pro_v0.1-alpha.py
 ```
 
 O executável será gerado em:
 
 ```text
-dist/Baita Photo Selector.exe
+dist/Baita Photo Selector v0.1.exe
 ```
 
 ## Como usar
