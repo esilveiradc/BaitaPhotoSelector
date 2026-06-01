@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "baita_photo_selector_pro_v0.1-alpha.py"
+      - "Baita-Photo-Selector-Windows-v0.1-alpha.py"
       - "requirements.txt"
       - ".github/workflows/build-windows.yml"
   release:
@@ -33,7 +33,7 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --onefile --windowed --name "Baita Photo Selector Pro v0.1-alpha" baita_photo_selector_pro_v0.1-alpha.py
+          pyinstaller --onefile --windowed --name "Baita Photo Selector Pro v0.1-alpha" Baita-Photo-Selector-Windows-v0.1-alpha.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
