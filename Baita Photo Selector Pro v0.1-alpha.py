@@ -1,5 +1,5 @@
 """
-Baita Photo Selector Pro v1.0
+Baita Photo Selector Pro v0.1-alpha
 Seleciona fotos tremidas, desfocadas, escuras, estouradas, com olhos fechados ou parecidas.
 """
 
@@ -31,7 +31,7 @@ except Exception:
     rawpy = None
 
 APP_NAME = "Baita Photo Selector Pro"
-APP_VERSION = "1.0"
+APP_VERSION = "0.1-alpha"
 
 EXTENSOES_JPG = (".jpg", ".jpeg", ".png", ".bmp", ".webp")
 EXTENSOES_RAW = (".cr2", ".cr3", ".nef", ".arw", ".dng", ".raf", ".orf", ".rw2")
