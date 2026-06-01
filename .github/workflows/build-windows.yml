@@ -1,48 +1,21 @@
-name: Baita-Photo-Selector-Windows-v0.1-alpha
+- name: Find main Python file
+  shell: pwsh
+  run: |
+    Get-ChildItem -Recurse -Filter "*.py"
 
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - "Baita-Photo-Selector-Windows-v0.1-alpha.py"
-      - "requirements.txt"
-      - ".github/workflows/build-windows.yml"
-  release:
-    types: [created]
+    $script = Get-ChildItem -Recurse -Filter "*.py" |
+      Where-Object { $_.Name -notlike "test_*" -and $_.FullName -notlike "*\.venv\*" } |
+      Select-Object -First 1
 
-jobs:
-  build-windows:
-    runs-on: windows-latest
+    if (-not $script) {
+      Write-Error "Nenhum arquivo .py encontrado no projeto."
+      exit 1
+    }
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+    echo "MAIN_SCRIPT=$($script.FullName)" >> $env:GITHUB_ENV
+    echo "Arquivo principal encontrado: $($script.FullName)"
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.10"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pyinstaller
-
-      - name: Build executable
-        run: |
-          pyinstaller --onefile --windowed --name "Baita Photo Selector Pro v0.1-alpha" Baita-Photo-Selector-Windows-v0.1-alpha.py
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Baita-Photo-Selector-Windows-v0.1-alpha
-          path: "dist/Baita Photo Selector v0.1.exe"
-
-      - name: Upload executable to release
-        if: github.event_name == 'release'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: "dist/Baita Photo Selector v0.1.exe.exe"
+- name: Build executable
+  shell: pwsh
+  run: |
+    pyinstaller --onefile --windowed --name "Baita Photo Selector Pro v0.1-alpha" "$env:MAIN_SCRIPT"
