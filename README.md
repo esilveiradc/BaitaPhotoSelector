@@ -39,7 +39,7 @@ pip install -r requirements.txt
 ## Execução
 
 ```bash
-python baita_photo_selector_pro.py
+python baita_photo_selector_pro_v0.1-alpha.py
 ```
 
 ## Gerar executável Windows
